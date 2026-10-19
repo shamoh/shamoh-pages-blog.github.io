@@ -1,6 +1,7 @@
 # Builds the site and deploys it to GitHub Pages on every push to master (and on demand).
 # A pull request only builds the site, so a broken change shows up before it is merged.
-# A failed build or deploy of master opens an issue assigned to the repository owner (.github/failure-issue.sh),
+# A failed build or deploy of master opens an issue assigned to the repository owner (.github/failure-issue.sh;
+# only when the repository has issues turned on, otherwise GitHub e-mails the failed run itself),
 # so he gets an e-mail; the next successful deploy closes it.
 name: Deploy na GitHub Pages
 

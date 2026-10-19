@@ -11,6 +11,12 @@ failed=$2
 body=$3
 run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
 
+# a repository with issues turned off: nothing to open or close (GitHub still e-mails a failed run to whoever started it)
+if [ "$(gh repo view "$GITHUB_REPOSITORY" --json hasIssuesEnabled --jq .hasIssuesEnabled)" != "true" ]; then
+  echo "::warning::Issues are turned off in this repository, no issue is opened or closed."
+  exit 0
+fi
+
 # open issues with exactly this title (the search alone also matches similar titles)
 open=$(ISSUE_TITLE="$title" gh issue list --state open --search "in:title \"$title\"" --json number,title \
   --jq '.[] | select(.title == env.ISSUE_TITLE) | .number')
