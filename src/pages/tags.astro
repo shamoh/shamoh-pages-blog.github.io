@@ -1,0 +1,31 @@
+---
+import TagBadges from '../components/TagBadges.astro';
+import Base from '../layouts/Base.astro';
+import { formatDate, postsByTag } from '../lib/posts';
+
+const tags = postsByTag();
+---
+
+<Base title="Tags">
+  <div class="container">
+    <h4>All Tags</h4>
+    <TagBadges tags={tags.map(([tag]) => tag)} />
+  </div>
+
+  <div class="container mt-4">
+    <h4>Posts by Tags</h4>
+
+    {tags.map(([tag, posts]) => (
+      <>
+        <h5 id={tag}>{tag}</h5>
+        <ul>
+          {posts.map((post) => (
+            <li>
+              <small>[ {formatDate(post.date)} ]</small> <a href={post.url}>{post.title}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    ))}
+  </div>
+</Base>

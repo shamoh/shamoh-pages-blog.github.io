@@ -19,19 +19,12 @@ nav {
   line-height: 50px; /* Vertically center the text there */
 }
 
-.card {
-  margin: 6px;
+/* posts exported from Blogger: wide code samples scroll instead of overflowing the page */
+.post-content pre {
+  overflow-x: auto;
 }
 
-.media {
-  margin-bottom: 10px;
-}
-
-.photo-gallery li {
-	display: inline-block;
-  margin-bottom: 4px;
-}
-
-.photo-gallery li img {
-  height: 240px;
+.post-content img {
+  max-width: 100%;
+  height: auto;
 }
