@@ -1,5 +1,6 @@
-_site/
-Gemfile.lock
-*.xcf
-__templates__
+node_modules/
+dist/
+.astro/
+.DS_Store
 .idea/
+*.xcf

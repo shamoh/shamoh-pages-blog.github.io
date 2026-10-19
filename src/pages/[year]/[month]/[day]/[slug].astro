@@ -1,0 +1,49 @@
+---
+import type { GetStaticPaths } from 'astro';
+import TagBadges from '../../../../components/TagBadges.astro';
+import Base from '../../../../layouts/Base.astro';
+import { formatDate, type Post, posts } from '../../../../lib/posts';
+
+export const getStaticPaths = (() =>
+  posts.map((post, i) => {
+    const [, year, month, day] = post.url.split('/');
+    return {
+      params: { year, month, day, slug: post.slug },
+      // posts are the newest first: the previous (older) one is the next in the list
+      props: { post, previous: posts[i + 1], next: posts[i - 1] },
+    };
+  })) satisfies GetStaticPaths;
+
+interface Props {
+  post: Post;
+  previous?: Post;
+  next?: Post;
+}
+
+const { post, previous, next } = Astro.props;
+---
+
+<Base title={post.title}>
+  <h2>{post.title}</h2>
+
+  <small>{formatDate(post.date)}</small>
+
+  <TagBadges tags={post.tags} />
+
+  <div class="post-content my-3">
+    <Fragment set:html={post.html} />
+  </div>
+
+  <div class="btn-toolbar justify-content-center mb-3" role="toolbar">
+    {previous && (
+      <div class="btn-group me-2" role="group" aria-label="Previous">
+        <a href={previous.url} class="btn btn-outline-primary btn-sm">&laquo; {previous.title}</a>
+      </div>
+    )}
+    {next && (
+      <div class="btn-group me-2" role="group" aria-label="Next">
+        <a href={next.url} class="btn btn-outline-primary btn-sm">{next.title} &raquo;</a>
+      </div>
+    )}
+  </div>
+</Base>
